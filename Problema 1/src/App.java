@@ -20,6 +20,9 @@ public class App {
         int[] h5 = {50, 50, 50, 50};
         // Answer should be: 50 + 1 + 0 + 50 = 101
 
+        int[] l0 = {1};
+        int[] h0 = {0};
+
         System.out.println("Testing Scopel's example:");
         Solution.solveP1(l1, h1);
         System.out.println("Testing our counter-example (Problem 1-1):");
@@ -30,5 +33,7 @@ public class App {
         Solution.solveP1(l4, h4);
         System.out.println("Testing an all-high example:");
         Solution.solveP1(l5, h5);
+        System.out.println("Testing a small example:");
+        Solution.solveP1(l0, h0);
     }
 }

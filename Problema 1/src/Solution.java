@@ -8,7 +8,7 @@ public class Solution {
 
     private Solution(){}
 
-    public static void solveP1(int[] l, int[] h) {
+    public static void solveP1(int l[], int h[]) {
         int[] lowDemandJob = l;
         int[] highDemandJob = h;
         int timeDuration = lowDemandJob.length;
@@ -17,7 +17,7 @@ public class Solution {
         CHOICE choice;
 
         if(timeDuration <= 3) {
-            System.out.println("Timeframe is too short to consider the problem.");
+            System.out.println("\u001B[31mTimeframe is too short to consider the problem.\u001B[0m");
             return;
         }
 
