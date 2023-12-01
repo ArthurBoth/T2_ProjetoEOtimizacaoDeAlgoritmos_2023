@@ -1,4 +1,4 @@
-public class Solution {
+public class P1Solution {
 
     enum CHOICE {
         LOW_DEMAND_JOB,
@@ -6,7 +6,7 @@ public class Solution {
         NO_JOB;
     }
 
-    private Solution(){}
+    private P1Solution(){}
 
     public static void solveP1(int l[], int h[]) {
         int[] lowDemandJob = l;

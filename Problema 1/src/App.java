@@ -24,16 +24,16 @@ public class App {
         int[] h0 = {0};
 
         System.out.println("Testing Scopel's example:");
-        Solution.solveP1(l1, h1);
+        P1Solution.solveP1(l1, h1);
         System.out.println("Testing our counter-example (Problem 1-1):");
-        Solution.solveP1(l2, h2);
+        P1Solution.solveP1(l2, h2);
         System.out.println("Testing a counter-example for our inicial code:");
-        Solution.solveP1(l3, h3);
+        P1Solution.solveP1(l3, h3);
         System.out.println("Testing an all-low example:");
-        Solution.solveP1(l4, h4);
+        P1Solution.solveP1(l4, h4);
         System.out.println("Testing an all-high example:");
-        Solution.solveP1(l5, h5);
+        P1Solution.solveP1(l5, h5);
         System.out.println("Testing a small example:");
-        Solution.solveP1(l0, h0);
+        P1Solution.solveP1(l0, h0);
     }
 }
