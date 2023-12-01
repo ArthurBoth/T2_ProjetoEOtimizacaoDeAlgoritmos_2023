@@ -1,0 +1,1 @@
+# T2_ProjetoEOtimizacaoDeAlgoritmos_2023
