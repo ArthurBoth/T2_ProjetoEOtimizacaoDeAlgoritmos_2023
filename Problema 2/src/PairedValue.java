@@ -1,19 +1,20 @@
 public class PairedValue implements Comparable<PairedValue> {
 
-    int a1;
-    int a2;
-    double a3;
-
-    public PairedValue(int a1, int a2, double a3) {
-        this.a1 = a1;
-        this.a2 = a2;
-        this.a3 = a3;
+    int weight;
+    int value;
+    
+    public PairedValue(int weight, int value) {
+        this.weight = weight;
+        this.value = value;
     }
+    
+    public int compareTo(PairedValue other) {
+        double thisRatio = ((double) this.value) / this.weight;
+        double otherRatio = ((double) other.value) / other.weight;
 
-    public int compareTo(PairedValue o) {
-        if (this.a3 > o.a3) {
+        if (thisRatio > otherRatio) {
             return 1;
-        } else if (this.a3 < o.a3) {
+        } else if (thisRatio < otherRatio) {
             return -1;
         } else {
             return 0;

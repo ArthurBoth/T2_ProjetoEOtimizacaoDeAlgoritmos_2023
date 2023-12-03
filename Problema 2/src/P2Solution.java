@@ -23,65 +23,77 @@ public class P2Solution {
         values = aux[1];
 
         // Finally, we calculate the solution using the branch and bound algorithm
-        printMatrix(knapsackSolve(weights, values, itemAmount, maxWeight));
+        knapsackSolve(weights, values, itemAmount, maxWeight);
     }
 
     private static int[][] orderByRatio(int[] weights, int[] values) {
         int[][] items = new int[2][weights.length];
-        double[] ratios = new double[weights.length];
         PairedValue[] pairs = new PairedValue[weights.length];
 
-        for (int i = 0; i < weights.length; i++) { // Calculate ratios
-            ratios[i] = ((double) values[i]) / weights[i];
-        }
-
-        for (int i = 0; i < weights.length; i++) { // Pair the ratios with the items
-            pairs[i] = new PairedValue(weights[i], values[i], ratios[i]);
+        for (int i = 0; i < weights.length; i++) { // Pair the values and weights
+            pairs[i] = new PairedValue(weights[i], values[i]);
         }
 
         Arrays.sort(pairs); // Sort the pairs by ratio
 
-        for (int i = 0; i < weights.length; i++) { // Unpair the pairs
-            items[0][i] = pairs[i].a1;
-            items[1][i] = pairs[i].a2;
+        for (int i = 0; i < weights.length; i++) { // Unpair the values and weights
+            items[0][i] = pairs[i].weight;
+            items[1][i] = pairs[i].value;
         }
 
         return items;
     }
 
-    private static int[][] knapsackSolve(int[] weights, int[] values, int itemAmount, int maxWeight) {
-        int[][] matrix = new int[itemAmount + 1][maxWeight + 1];
+    private static void knapsackSolve(int[] weights, int[] values, int itemAmount, int maxWeight) {
+        /*
+            First, we create a tree with all possible combinations of items and weights 
+            (solution will always be in the last row and column)
+         */
 
-        for (int i = 1; i <= itemAmount; i++) {
-            for (int j = 1; j <= maxWeight; j++) {
-                if (weights[i - 1] > j) {
-                    matrix[i][j] = matrix[i - 1][j];
+        int[][] tree = new int
+                           [itemAmount + 1] // One row for each ammount possible from 0 to all items
+                           [maxWeight + 1]; // One column for each weight possible from 0 to the maximum capacity
+        int takeItem; // The value of the knapsack if we take the item
+        int dontTakeItem; // The value of the knapsack if we don't take the item
+
+        for (int i = 1; i <= itemAmount; i++) { // i starts as 1 because the first row is always 0
+            for (int j = 1; j <= maxWeight; j++) { // j starts as 1 because the first column is always 0
+                dontTakeItem = tree[i - 1][j]; // value stays the same if we don't take the item
+
+                if (weights[i - 1] > j) { // If the item is too heavy, we can't take it
+                    tree[i][j] = dontTakeItem;
                 } else {
-                    matrix[i][j] = Math.max(
-                        matrix[i - 1][j],
-                        matrix[i - 1][j - weights[i - 1]] + values[i - 1]);
+                    takeItem = tree[i - 1][j - weights[i - 1]] + values[i - 1]; // value increases if we take the item
+                    tree[i][j] = Math.max(takeItem, dontTakeItem); // We take the best option
                 }
             }
         }
 
-        return matrix;
-    }
-
-    private static void printMatrix(int[][] matrix) {
-        for (int[] row : matrix) {
-            for (int item : row) {
-                System.out.print(item + " ");
+        /*
+            Then, we determine which items are in the knapsack
+        */
+        int answer = tree[itemAmount][maxWeight];
+        boolean[] itemInKnapsack = new boolean[itemAmount];
+        while (itemAmount > 0) {
+            if (tree[itemAmount][maxWeight] != tree[itemAmount - 1][maxWeight]) { // Check if the item is in the knapsack
+                itemInKnapsack[itemAmount - 1] = true; // registers the item is in the knapsack
+                maxWeight -= weights[itemAmount - 1]; // adjusts the maximum weight
+            } else {
+                itemInKnapsack[itemAmount - 1] = false; // registers the item isn't in the knapsack
             }
-            System.out.println();
+            itemAmount--;
         }
-    }
 
-    public static void main (String[] args) {
-        int[] weights = { 4, 7, 5, 3 };
-        int[] values =  { 40, 42, 25, 12 };
-        int itemAmount = 4;
-        int maxWeight = 10;
-
-        solveP2(itemAmount, weights, values, maxWeight);
+        /*
+            Finally, we print the solution
+        */
+        for (int i = 0; i < itemInKnapsack.length; i++) {
+            if (itemInKnapsack[i]) {
+                System.out.printf("\u001B[33mItem %d is in the knapsack\u001B[0m%n", i + 1);
+            } else {
+                System.out.printf("\u001B[31mItem %d is not in the knapsack\u001B[0m%n", i + 1);
+            }
+        }
+        System.out.printf("\u001B[32mTotal value: %d\u001B[0m%n", answer);
     }
 }

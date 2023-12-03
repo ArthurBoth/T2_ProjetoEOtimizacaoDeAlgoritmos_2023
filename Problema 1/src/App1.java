@@ -1,4 +1,4 @@
-public class App {
+public class App1 {
     public static void main(String[] args) {
         int[] l1 = {10, 1, 10, 10};
         int[] h1 = {5, 50, 5, 1};
