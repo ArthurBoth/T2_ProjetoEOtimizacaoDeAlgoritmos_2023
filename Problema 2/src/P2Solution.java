@@ -30,6 +30,7 @@ public class P2Solution {
 
         weights = aux[0];
         values = aux[1];
+        printItems(weights, values);
 
         // Finally, we calculate the solution using the branch and bound algorithm
         knapsackSolve(weights, values, itemAmount, maxWeight);
@@ -122,5 +123,23 @@ public class P2Solution {
             }
         }
         System.out.printf("\u001B[32mTotal value: %d\u001B[0m%n", answer);
+    }
+
+    /**
+     * Prints the items in the knapsack
+     * @param weights Individual weights of every item
+     * @param values Individual values of every item
+     * 
+     * Complexity: O(n)
+     */
+    private static void printItems(int[] weights, int[] values) {
+        StringBuilder printable = new StringBuilder();
+        for (int i = 0; i < weights.length; i++) {
+            printable.append(
+                String.format(
+                    "Item [%d]: weight = %d, value = %d, ratio = %.2f%n",
+                     i + 1, weights[i], values[i], (double) values[i] / weights[i]));
+        }
+        System.out.print(printable);
     }
 }
