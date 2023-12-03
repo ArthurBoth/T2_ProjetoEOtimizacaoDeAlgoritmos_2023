@@ -13,9 +13,9 @@ public class PairedValue implements Comparable<PairedValue> {
         double otherRatio = ((double) other.value) / other.weight;
 
         if (thisRatio > otherRatio) {
-            return 1;
-        } else if (thisRatio < otherRatio) {
             return -1;
+        } else if (thisRatio < otherRatio) {
+            return 1;
         } else {
             return 0;
         }
