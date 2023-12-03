@@ -3,6 +3,15 @@ import java.util.Arrays;
 public class P2Solution {
     private P2Solution() {}
 
+    /**
+     * Solves the assignment's problem 2
+     * @param n  Number of items
+     * @param wi Individual weights of every item
+     * @param vi Individual values of every item
+     * @param W  Maximum weight the knapsack can hold
+     * 
+     * Complexity: O(n * W)
+     */
     public static void solveP2(int n, int wi[], int vi[], int W) {
         int itemAmount = n;
         int maxWeight = W;
@@ -26,6 +35,15 @@ public class P2Solution {
         knapsackSolve(weights, values, itemAmount, maxWeight);
     }
 
+    /**
+     * Orders items by value/weight ratio
+     * @param weights Individual weights of every item
+     * @param values  Individual values of every item
+     * 
+     * @return        A matrix with the weights in the first row and the values in the second row, both ordered by ratio
+     * 
+     * Complexity: O(n * log(n))
+     */
     private static int[][] orderByRatio(int[] weights, int[] values) {
         int[][] items = new int[2][weights.length];
         PairedValue[] pairs = new PairedValue[weights.length];
@@ -44,6 +62,15 @@ public class P2Solution {
         return items;
     }
 
+    /**
+     * Solves the knapsack problem using the branch and bound algorithm
+     * @param weights    Individual weights of every item
+     * @param values     Individual values of every item
+     * @param itemAmount Number of items
+     * @param maxWeight  Maximum weight the knapsack can hold
+     * 
+     * Complexity: O(n * W)
+     */
     private static void knapsackSolve(int[] weights, int[] values, int itemAmount, int maxWeight) {
         /*
             First, we create a tree with all possible combinations of items and weights 

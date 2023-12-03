@@ -8,6 +8,13 @@ public class P1Solution {
 
     private P1Solution(){}
 
+    /**
+     * Solves the assignment's problem 1
+     * @param l Low demand jobs
+     * @param h High demand jobs
+     * 
+     * Complexity: O(n)
+     */
     public static void solveP1(int l[], int h[]) {
         int[] lowDemandJob = l;
         int[] highDemandJob = h;
@@ -104,6 +111,13 @@ public class P1Solution {
         System.out.printf("\u001B[32mTotal value: %d\u001B[0m%n",currentValue);
     }
 
+    /**
+     * Prints the choice for the given week
+     * @param choice The choice for the week
+     * @param week   The week's number
+     * 
+     * Complexity: O(1)
+     */
     private static void printChoice(CHOICE choice, int week) {
         StringBuilder printable = new StringBuilder("Choose"); 
 
