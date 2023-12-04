@@ -87,23 +87,29 @@ public class P1Solution {
             Then, consider the second last and last weeks
         */
         // If the last week's choice was a low demand job, then working on a low demand job this week is best 
-        if (choice == CHOICE.LOW_DEMAND_JOB) { // adjust timeframe
-            currentWeek++;
-        }
-        if (highDemandJob[currentWeek + 1] > (lowDemandJob[currentWeek] + lowDemandJob[currentWeek + 1])) {
-            choice = CHOICE.HIGH_DEMAND_JOB;
-            printChoice(CHOICE.NO_JOB, currentWeek); // No job this week
-            currentWeek++;
-            printChoice(choice, currentWeek); // High demand job next week
-            currentValue += highDemandJob[currentWeek];
-        } else {
+        currentWeek++;
+
+        if (currentWeek < (timeDuration - 1)) { // Are we on the second last week?
+            if (highDemandJob[currentWeek + 1] > (lowDemandJob[currentWeek] + lowDemandJob[currentWeek + 1])) {
+                choice = CHOICE.HIGH_DEMAND_JOB;
+                printChoice(CHOICE.NO_JOB, currentWeek); // No job this week
+                currentWeek++;
+                printChoice(choice, currentWeek); // High demand job next week
+                currentValue += highDemandJob[currentWeek];
+            } else {
+                choice = CHOICE.LOW_DEMAND_JOB;
+                printChoice(choice, currentWeek); // Low demand job this week
+                currentValue += lowDemandJob[currentWeek];
+                currentWeek++;
+                printChoice(choice, currentWeek); // Low demand job next week
+                currentValue += lowDemandJob[currentWeek];
+            }
+        } else { // if we are on the last week, then working on a low demand job this week is best
             choice = CHOICE.LOW_DEMAND_JOB;
             printChoice(choice, currentWeek); // Low demand job this week
             currentValue += lowDemandJob[currentWeek];
-            currentWeek++;
-            printChoice(choice, currentWeek); // Low demand job next week
-            currentValue += lowDemandJob[currentWeek];
         }
+
 
         /*
             Finally, print the total value 
