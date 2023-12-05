@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.Arrays;
 
 public class P2Solution {
@@ -21,7 +22,7 @@ public class P2Solution {
 
         // First, we check if values are valid
         if ((n <= 0) || (n != wi.length) || (n != vi.length) || (W <= 0)) {
-            System.out.println("Invalid values");
+            System.out.println("Invalid input");
             return;
         }
 
@@ -100,12 +101,13 @@ public class P2Solution {
         /*
             Then, we determine which items are in the knapsack
         */
-        int answer = tree[itemAmount][maxWeight];
+        int remainingWeight = maxWeight;
+        int answer = tree[itemAmount][remainingWeight];
         boolean[] itemInKnapsack = new boolean[itemAmount];
         while (itemAmount > 0) {
-            if (tree[itemAmount][maxWeight] != tree[itemAmount - 1][maxWeight]) { // Check if the item is in the knapsack
+            if (tree[itemAmount][remainingWeight] != tree[itemAmount - 1][remainingWeight]) { // Check if the item is in the knapsack
                 itemInKnapsack[itemAmount - 1] = true; // registers the item is in the knapsack
-                maxWeight -= weights[itemAmount - 1]; // adjusts the maximum weight
+                remainingWeight -= weights[itemAmount - 1]; // adjusts the maximum weight
             } else {
                 itemInKnapsack[itemAmount - 1] = false; // registers the item isn't in the knapsack
             }
@@ -122,6 +124,10 @@ public class P2Solution {
                 System.out.printf("\u001B[31mItem %d is not in the knapsack\u001B[0m%n", i + 1);
             }
         }
+        DecimalFormat formatter = new DecimalFormat("#.##");
+        String percentage = formatter.format((((double)(maxWeight-remainingWeight))/maxWeight)*100);
+        System.out.printf("This solution uses %dkg/%dkg of the knapsack, a total of %s%% of the capacity%n",
+                                    (maxWeight-remainingWeight), maxWeight, percentage);
         System.out.printf("\u001B[32mTotal value: %d\u001B[0m%n", answer);
     }
 
@@ -133,12 +139,15 @@ public class P2Solution {
      * Complexity: O(n)
      */
     private static void printItems(int[] weights, int[] values) {
+        DecimalFormat formatter = new DecimalFormat("#.##");
+        String ratio;
         StringBuilder printable = new StringBuilder();
         for (int i = 0; i < weights.length; i++) {
+            ratio = formatter.format((double) values[i] / weights[i]);
             printable.append(
                 String.format(
-                    "Item [%d]: weight = %d, value = %d, ratio = %.2f%n",
-                     i + 1, weights[i], values[i], (double) values[i] / weights[i]));
+                    "Item [%d]: value = %d, weight = %d, ratio = %s%n",
+                     i + 1, values[i], weights[i], ratio));
         }
         System.out.print(printable);
     }
